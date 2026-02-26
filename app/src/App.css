@@ -1,0 +1,71 @@
+/* App-specific styles */
+
+/* Ensure smooth scrolling behavior */
+html {
+  scroll-behavior: auto;
+}
+
+/* Pin spacer styling */
+.pin-spacer {
+  background: transparent !important;
+}
+
+/* Section transitions */
+section {
+  will-change: transform, opacity;
+}
+
+/* Glass panel enhancements */
+.glass-panel,
+.glass-panel-sm {
+  will-change: transform, opacity;
+}
+
+/* Animation performance */
+.animate-float,
+.animate-pulse-glow,
+.animate-subtle-rotate {
+  will-change: transform;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .section-pinned .glass-panel {
+    width: 92vw !important;
+    height: 85vh !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-pinned .glass-panel {
+    width: 95vw !important;
+    height: 90vh !important;
+  }
+
+  /* Stack content vertically on mobile */
+  .section-pinned .glass-panel > div > div:first-child {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    max-width: 100% !important;
+    padding: 1rem;
+  }
+
+  .section-pinned .glass-panel > div > div:last-child {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    height: 40vh !important;
+    margin-top: 1rem;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-subtle-rotate {
+    animation: none !important;
+  }
+}
