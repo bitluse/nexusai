@@ -1,9 +1,5 @@
-import { useRef, useLayoutEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import { ArrowRight, Zap, Mail, FileText, MessageSquare, Database, Cloud } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const IntegrationsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -12,104 +8,6 @@ const IntegrationsSection = () => {
   const orbitRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
   const centerRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '+=130%',
-          pin: true,
-          scrub: 0.6,
-        },
-      });
-
-      // ENTRANCE (0-30%)
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: '40vw', rotateY: 18, opacity: 0 },
-        { x: 0, rotateY: 0, opacity: 1, ease: 'none' },
-        0
-      );
-
-      scrollTl.fromTo(
-        contentRef.current,
-        { x: '-18vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'none' },
-        0.05
-      );
-
-      scrollTl.fromTo(
-        orbitRef.current,
-        { scale: 0.85, opacity: 0, rotate: -12 },
-        { scale: 1, opacity: 1, rotate: 0, ease: 'none' },
-        0
-      );
-
-      const icons = iconsRef.current?.querySelectorAll('.orbit-icon');
-      if (icons) {
-        scrollTl.fromTo(
-          icons,
-          { scale: 0.7, opacity: 0, y: -10 },
-          { scale: 1, opacity: 1, y: 0, stagger: 0.02, ease: 'none' },
-          0.1
-        );
-      }
-
-      scrollTl.fromTo(
-        centerRef.current,
-        { scale: 0.6, opacity: 0 },
-        { scale: 1, opacity: 1, ease: 'none' },
-        0.12
-      );
-
-      // SETTLE (30-70%): Hold position
-
-      // EXIT (70-100%)
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: 0, rotateY: 0, opacity: 1 },
-        { x: '-28vw', rotateY: -10, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        contentRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-14vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        orbitRef.current,
-        { scale: 1, opacity: 1 },
-        { scale: 1.08, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      if (icons) {
-        scrollTl.fromTo(
-          icons,
-          { scale: 1, opacity: 1 },
-          { scale: 0.92, opacity: 0, ease: 'power2.in' },
-          0.7
-        );
-      }
-
-      scrollTl.fromTo(
-        centerRef.current,
-        { scale: 1, opacity: 1 },
-        { scale: 0.85, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
 
   const integrations = [
     { icon: Zap, color: '#4F6DFF', angle: 0 },

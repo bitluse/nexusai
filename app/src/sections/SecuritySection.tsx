@@ -1,9 +1,5 @@
-import { useRef, useLayoutEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import { ArrowRight, Shield } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const SecuritySection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -12,99 +8,6 @@ const SecuritySection = () => {
   const shieldRef = useRef<HTMLDivElement>(null);
   const checkRef = useRef<SVGPathElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '+=130%',
-          pin: true,
-          scrub: 0.6,
-        },
-      });
-
-      // ENTRANCE (0-30%)
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: '40vw', rotateY: 18, opacity: 0 },
-        { x: 0, rotateY: 0, opacity: 1, ease: 'none' },
-        0
-      );
-
-      scrollTl.fromTo(
-        contentRef.current,
-        { x: '-18vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'none' },
-        0.05
-      );
-
-      scrollTl.fromTo(
-        shieldRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, ease: 'none' },
-        0
-      );
-
-      // Checkmark draw-on
-      if (checkRef.current) {
-        const pathLength = checkRef.current.getTotalLength();
-        gsap.set(checkRef.current, {
-          strokeDasharray: pathLength,
-          strokeDashoffset: pathLength,
-        });
-        scrollTl.to(
-          checkRef.current,
-          { strokeDashoffset: 0, ease: 'none' },
-          0.15
-        );
-      }
-
-      scrollTl.fromTo(
-        nodeRef.current,
-        { y: '6vh', opacity: 0 },
-        { y: 0, opacity: 1, ease: 'none' },
-        0.12
-      );
-
-      // SETTLE (30-70%): Hold
-
-      // EXIT (70-100%)
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: 0, rotateY: 0, opacity: 1 },
-        { x: '-28vw', rotateY: -10, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        contentRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-14vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        shieldRef.current,
-        { scale: 1, opacity: 1 },
-        { scale: 1.05, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        nodeRef.current,
-        { y: 0, opacity: 1 },
-        { y: '-4vh', opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section

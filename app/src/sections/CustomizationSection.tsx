@@ -1,9 +1,5 @@
-import { useRef, useLayoutEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import { ArrowRight, Sliders, Palette, Layout, Bell } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const CustomizationSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -12,104 +8,6 @@ const CustomizationSection = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const slidersRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '+=130%',
-          pin: true,
-          scrub: 0.6,
-        },
-      });
-
-      // ENTRANCE (0-30%)
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: '40vw', rotateY: 18, opacity: 0 },
-        { x: 0, rotateY: 0, opacity: 1, ease: 'none' },
-        0
-      );
-
-      scrollTl.fromTo(
-        contentRef.current,
-        { x: '-18vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'none' },
-        0.05
-      );
-
-      scrollTl.fromTo(
-        cardRef.current,
-        { x: '18vw', opacity: 0, scale: 0.98 },
-        { x: 0, opacity: 1, scale: 1, ease: 'none' },
-        0
-      );
-
-      const sliders = slidersRef.current?.querySelectorAll('.slider-row');
-      if (sliders) {
-        scrollTl.fromTo(
-          sliders,
-          { x: '6vw', opacity: 0 },
-          { x: 0, opacity: 1, stagger: 0.03, ease: 'none' },
-          0.14
-        );
-      }
-
-      scrollTl.fromTo(
-        profileRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, ease: 'none' },
-        0.18
-      );
-
-      // SETTLE (30-70%): Hold
-
-      // EXIT (70-100%)
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: 0, rotateY: 0, opacity: 1 },
-        { x: '-28vw', rotateY: -10, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        contentRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-14vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        cardRef.current,
-        { x: 0, rotateY: 0, opacity: 1 },
-        { x: '18vw', rotateY: 8, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      if (sliders) {
-        scrollTl.fromTo(
-          sliders,
-          { opacity: 1 },
-          { opacity: 0, ease: 'power2.in' },
-          0.7
-        );
-      }
-
-      scrollTl.fromTo(
-        profileRef.current,
-        { opacity: 1 },
-        { opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
 
   const settings = [
     { icon: Palette, label: 'Theme', value: 'Dark mode', color: '#4F6DFF' },

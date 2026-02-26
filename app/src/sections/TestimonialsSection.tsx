@@ -1,63 +1,10 @@
-import { useRef, useLayoutEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import { Quote } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const TestimonialsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      // Heading animation
-      gsap.fromTo(
-        headingRef.current,
-        { y: 24, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: headingRef.current,
-            start: 'top 75%',
-            end: 'top 55%',
-            scrub: 1,
-          },
-        }
-      );
-
-      // Cards animation
-      const cards = cardsRef.current?.querySelectorAll('.testimonial-card');
-      if (cards) {
-        gsap.fromTo(
-          cards,
-          { y: 36, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.12,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: 'top 80%',
-              end: 'top 50%',
-              scrub: 1,
-            },
-          }
-        );
-      }
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
 
   const testimonials = [
     {

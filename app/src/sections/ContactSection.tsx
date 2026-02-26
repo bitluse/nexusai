@@ -1,9 +1,5 @@
-import { useRef, useLayoutEffect, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef, useState } from 'react';
 import { ArrowRight, Mail, Send, Check } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ContactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -19,49 +15,6 @@ const ContactSection = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        panelRef.current,
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: panelRef.current,
-            start: 'top 80%',
-            end: 'top 50%',
-            scrub: 1,
-          },
-        }
-      );
-
-      gsap.fromTo(
-        formRef.current,
-        { x: '6vw', opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: formRef.current,
-            start: 'top 80%',
-            end: 'top 50%',
-            scrub: 1,
-          },
-        }
-      );
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
@@ -74,7 +27,7 @@ const ContactSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-space-900 py-24 z-[120]"
+      className="relative bg-space-900 py-20 md:py-24 z-[120]"
       id="contact"
     >
       {/* Aurora Background */}
@@ -84,22 +37,22 @@ const ContactSection = () => {
         {/* Glass Panel */}
         <div
           ref={panelRef}
-          className="glass-panel p-8 lg:p-12"
+          className="glass-panel p-5 sm:p-7 lg:p-10"
         >
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-stretch">
             {/* Left Content */}
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
               <h2
                 className="font-display font-bold text-text-primary uppercase tracking-tight leading-[0.95] mb-6"
                 style={{ fontSize: 'clamp(32px, 4vw, 56px)' }}
               >
                 READY WHEN YOU ARE
               </h2>
-              <p className="text-text-secondary text-lg mb-8">
+              <p className="text-text-secondary text-base sm:text-lg">
                 Get a demo or start building today.
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4">
                 <button className="btn-primary flex items-center gap-2">
                   Start free trial
                   <ArrowRight size={18} />
@@ -112,8 +65,8 @@ const ContactSection = () => {
             </div>
 
             {/* Form */}
-            <div ref={formRef}>
-              <div className="glass-panel-sm p-6 lg:p-8">
+            <div ref={formRef} className="mt-8 lg:mt-0">
+              <div className="glass-panel-sm p-5 sm:p-6 lg:p-8">
                 <h3 className="text-text-primary font-display font-semibold text-xl mb-6">
                   Send us a message
                 </h3>

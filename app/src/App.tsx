@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './App.css';
 
 // Components
@@ -21,16 +18,7 @@ import PricingSection from './sections/PricingSection';
 import TestimonialsSection from './sections/TestimonialsSection';
 import ContactSection from './sections/ContactSection';
 
-gsap.registerPlugin(ScrollTrigger);
-
 function App() {
-  // Cleanup all ScrollTriggers on unmount
-  useEffect(() => {
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
-  }, []);
-
   return (
     <div className="relative bg-space-900 min-h-screen">
       {/* Noise Overlay */}
@@ -40,7 +28,7 @@ function App() {
       <Navigation />
 
       {/* Main Content */}
-      <main className="relative">
+      <main className="relative pt-20 md:pt-28">
         {/* Pinned Sections with z-index stacking */}
         <HeroSection />
         <IntegrationsSection />

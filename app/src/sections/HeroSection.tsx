@@ -1,9 +1,6 @@
-import { useEffect, useRef, useLayoutEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Play } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -62,85 +59,6 @@ const HeroSection = () => {
         0.4
       );
     }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // Scroll-driven exit animation
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '+=130%',
-          pin: true,
-          scrub: 0.6,
-          onLeaveBack: () => {
-            // Reset all elements to visible when scrolling back
-            gsap.set(panelRef.current, { x: 0, rotateY: 0, opacity: 1 });
-            gsap.set(headlineRef.current, { x: 0, opacity: 1 });
-            gsap.set(subheadlineRef.current, { x: 0, opacity: 1 });
-            gsap.set(ctaRef.current, { x: 0, opacity: 1 });
-            gsap.set(uiMockRef.current, { x: 0, rotateY: 0, opacity: 1 });
-            gsap.set(glowRef.current, { scale: 1, opacity: 1 });
-          },
-        },
-      });
-
-      // ENTRANCE (0-30%): Hold position (already animated on load)
-      // SETTLE (30-70%): Hold position
-      // EXIT (70-100%): Animate out
-
-      // Glass panel exit
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: 0, rotateY: 0, opacity: 1 },
-        { x: '-28vw', rotateY: -10, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      // Headline group exit
-      scrollTl.fromTo(
-        headlineRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-18vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        subheadlineRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-14vw', opacity: 0, ease: 'power2.in' },
-        0.72
-      );
-
-      scrollTl.fromTo(
-        ctaRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-12vw', opacity: 0, ease: 'power2.in' },
-        0.74
-      );
-
-      // UI Mock exit
-      scrollTl.fromTo(
-        uiMockRef.current,
-        { x: 0, rotateY: 0, opacity: 1 },
-        { x: '18vw', rotateY: 8, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      // Background glow exit
-      scrollTl.fromTo(
-        glowRef.current,
-        { scale: 1, opacity: 0.22 },
-        { scale: 1.12, opacity: 0.08, ease: 'power2.in' },
-        0.7
-      );
-    }, section);
 
     return () => ctx.revert();
   }, []);
